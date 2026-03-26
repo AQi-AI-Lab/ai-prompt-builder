@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Prompt Builder Pro</title>
+
+<style>
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0f172a,#020617);color:white;margin:0}
+.container{max-width:1200px;margin:auto;padding:20px}
+h1{text-align:center;margin-bottom:20px}
+
+/* Banner 強化 */
+.banner{margin-bottom:20px;padding:14px;border-radius:16px;background:linear-gradient(135deg,#7c2d12,#dc2626);text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.4);transition:all .3s ease;position:relative;overflow:hidden;z-index:10}
+.banner:hover{box-shadow:0 0 20px rgba(255,80,80,0.8),0 0 40px rgba(255,0,0,0.4);transform:translateY(-2px) scale(1.01)}
+.banner a{color:white;text-decoration:none;font-size:20px;font-weight:bold;display:block;position:relative;z-index:11}
+
+/* CTA動畫（呼吸發光） */
+.cta{color:#22c55e;animation:glow 2s infinite alternate}
+@keyframes glow{
+  0%{text-shadow:0 0 5px #22c55e}
+  100%{text-shadow:0 0 15px #22c55e,0 0 25px #22c55e}
+}
+
+.tabs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:20px}
+.tab{padding:10px 16px;border-radius:999px;background:#1e293b;cursor:pointer}
+.tab.active{background:#3b82f6}
+
+.panel{display:none}
+.panel.active{display:block}
+
+.accordion{margin-bottom:12px;border-radius:12px;background:#1e293b}
+.accordion-header{padding:12px;cursor:pointer;font-weight:bold}
+.accordion-header:hover{background:#334155}
+.accordion-content{display:none;padding:10px}
+.accordion.active .accordion-content{display:block}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.item{position:relative;padding:12px;border:none;border-radius:12px;cursor:pointer;background:#020617;color:white}
+.tooltip{position:absolute;bottom:120%;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:8px;border-radius:8px;font-size:12px;white-space:normal;opacity:0;pointer-events:none;transition:0.2s;min-width:140px;text-align:center}
+.item:hover .tooltip{opacity:1}
+.item.active{background:#10b981;color:black}
+
+.output-box{margin-top:20px;background:#020617;padding:15px;border-radius:16px}
+textarea{width:100%;height:100px;margin-top:10px;border-radius:10px;padding:10px;border:none;background:#0f172a;color:white}
+button.copy{margin-top:10px;padding:10px;border:none;border-radius:10px;background:#10b981}
+</style>
+</head>
+<body>
+<div class="container">
+<!-- 作者連結 Banner -->
+<div class="banner">
+  <a href="https://www.youtube.com/@AQiAILab" target="_blank" rel="noopener noreferrer" onclick="window.open('https://www.youtube.com/@AQiAILab','_blank')">
+    📺 作者連結：<span class="cta">張阿旗 AI Lab</span>（點我訂閱🔥）
+  </a>
+</div>
+
+<h1>🔥 AI Prompt Builder Pro（完整專業版）</h1>
+
+<div class="tabs">
+  <div class="tab" data-target="style">風格</div>
+  <div class="tab active" data-target="composition">構圖</div>
+  <div class="tab" data-target="angle">視角</div>
+  <div class="tab" data-target="shot">景別</div>
+  <div class="tab" data-target="lighting">光影</div>
+  <div class="tab" data-target="lens">焦距</div>
+  <div class="tab" data-target="dof">景深</div>
+  <div class="tab" data-target="env">環境</div>
+  <div class="tab" data-target="ratio">比例</div>
+  <div class="tab" data-target="expression">表情</div>
+</div>
+
+<!-- 風格 -->
+<div id="style" class="panel">
+<div class="accordion"><div class="accordion-header">寫實</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="photorealistic">寫實</button>
+<button class="item" data-en="cinematic">電影感</button>
+<button class="item" data-en="high detail">高細節</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">藝術風</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="oil painting">油畫</button>
+<button class="item" data-en="watercolor">水彩</button>
+<button class="item" data-en="ink wash painting">水墨</button>
+<button class="item" data-en="sketch">素描</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">動漫/遊戲</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="anime style">動漫</button>
+<button class="item" data-en="manga style">漫畫</button>
+<button class="item" data-en="game art">遊戲風</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">品牌/工作室</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="studio ghibli style">吉卜力</button>
+<button class="item" data-en="pixar style">皮克斯</button>
+<button class="item" data-en="disney style">迪士尼</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">風格化</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="cyberpunk">賽博朋克</button>
+<button class="item" data-en="steampunk">蒸氣龐克</button>
+<button class="item" data-en="fantasy style">奇幻</button>
+<button class="item" data-en="sci-fi">科幻</button>
+</div></div></div>
+</div>
+
+<!-- 構圖 -->
+<div id="composition" class="panel active">
+<div class="accordion"><div class="accordion-header">基礎構圖</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="rule of thirds">三分法</button>
+<button class="item" data-en="centered composition">中心構圖</button>
+<button class="item" data-en="symmetry">對稱</button>
+<button class="item" data-en="diagonal composition">對角線構圖</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">進階構圖</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="leading lines">引導線</button>
+<button class="item" data-en="frame within a frame">框中框</button>
+<button class="item" data-en="negative space">留白</button>
+<button class="item" data-en="rule of odds">奇數構圖</button>
+</div></div></div>
+</div>
+
+<!-- 視角 -->
+<div id="angle" class="panel">
+<div class="accordion"><div class="accordion-header">常用</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="eye level shot">平視</button>
+<button class="item" data-en="low angle shot">仰角</button>
+<button class="item" data-en="high angle shot">俯角</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">進階</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="bird's eye view">鳥瞰</button>
+<button class="item" data-en="worm's eye view">蟲視角</button>
+<button class="item" data-en="dutch angle">傾斜</button>
+<button class="item" data-en="over the shoulder shot">肩後視角</button>
+</div></div></div>
+</div>
+
+<!-- 景別 -->
+<div id="shot" class="panel">
+<div class="accordion"><div class="accordion-header">遠</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="extreme wide shot">極遠景</button>
+<button class="item" data-en="wide shot">遠景</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">中</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="medium shot">中景</button>
+<button class="item" data-en="medium close-up">中近景</button>
+<button class="item" data-en="full shot">全身</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">近</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="close-up">特寫</button>
+<button class="item" data-en="extreme close-up">極近景</button>
+</div></div></div>
+</div>
+
+<!-- 光影 -->
+<div id="lighting" class="panel">
+<div class="accordion"><div class="accordion-header">光源</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="side lighting">側光</button>
+<button class="item" data-en="top lighting">頂光</button>
+<button class="item" data-en="backlighting">逆光</button>
+<button class="item" data-en="window light">窗光</button>
+<button class="item" data-en="neon lighting">霓虹光</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">光質</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="soft lighting">柔光</button>
+<button class="item" data-en="hard lighting">硬光</button>
+<button class="item" data-en="rim lighting">輪廓光</button>
+<button class="item" data-en="diffused light">漫射光</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">風格</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="dramatic lighting">戲劇光</button>
+<button class="item" data-en="cinematic lighting">電影光</button>
+<button class="item" data-en="studio lighting">棚拍光</button>
+</div></div></div>
+</div>
+
+<!-- 焦距 -->
+<div id="lens" class="panel">
+<div class="accordion"><div class="accordion-header">廣角</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="14mm">14mm</button>
+<button class="item" data-en="24mm">24mm</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">標準</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="35mm">35mm</button>
+<button class="item" data-en="50mm">50mm</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">長焦</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="85mm">85mm</button>
+<button class="item" data-en="135mm">135mm</button>
+<button class="item" data-en="200mm">200mm</button>
+</div></div></div>
+</div>
+
+<!-- 景深 -->
+<div id="dof" class="panel">
+<div class="accordion"><div class="accordion-header">控制</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="shallow depth of field">淺景深</button>
+<button class="item" data-en="deep depth of field">深景深</button>
+<button class="item" data-en="bokeh">散景</button>
+<button class="item" data-en="sharp focus">銳利對焦</button>
+</div></div></div>
+</div>
+
+<!-- 環境 -->
+<div id="env" class="panel">
+<div class="accordion"><div class="accordion-header">時間</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="sunrise">日出</button>
+<button class="item" data-en="noon">正午</button>
+<button class="item" data-en="sunset">黃昏</button>
+<button class="item" data-en="night">夜晚</button>
+<button class="item" data-en="blue hour">藍調時刻</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">天氣</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="rain">雨</button>
+<button class="item" data-en="snow">雪</button>
+<button class="item" data-en="fog">霧</button>
+<button class="item" data-en="storm">暴風</button>
+</div></div></div>
+</div>
+
+<!-- 比例 -->
+<div id="ratio" class="panel">
+<div class="accordion"><div class="accordion-header">比例</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="16:9">16:9</button>
+<button class="item" data-en="9:16">9:16</button>
+<button class="item" data-en="1:1">1:1</button>
+<button class="item" data-en="4:3">4:3</button>
+<button class="item" data-en="21:9">21:9</button>
+</div></div></div>
+</div>
+
+<!-- 表情 -->
+<div id="expression" class="panel">
+<div class="accordion"><div class="accordion-header">正向</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="smiling">😊 微笑</button>
+<button class="item" data-en="laughing">😆 大笑</button>
+<button class="item" data-en="gentle smile">☺️ 溫柔</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">負向</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="crying">😭 哭泣</button>
+<button class="item" data-en="frowning">😠 皺眉</button>
+<button class="item" data-en="despairing">😵 絕望</button>
+</div></div></div>
+
+<div class="accordion"><div class="accordion-header">強烈</div><div class="accordion-content"><div class="grid">
+<button class="item" data-en="angry">😡 憤怒</button>
+<button class="item" data-en="shouting">🗣 咆哮</button>
+<button class="item" data-en="smirk">😏 輕蔑</button>
+</div></div></div>
+</div>
+
+<div class="output-box">
+<label>English Prompt</label>
+<textarea id="outputEN"></textarea>
+<button class="copy" onclick="copyText()">📋 Copy</button>
+</div>
+
+</div>
+
+<script>
+let selected=new Map();
+
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.onclick=()=>{
+    let t=tab.dataset.target;if(!t)return;
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(t)?.classList.add('active');
+  }
+});
+
+document.querySelectorAll('.accordion-header').forEach(h=>{
+  h.onclick=()=>h.parentElement.classList.toggle('active');
+});
+
+const tooltipMap={
+"rule of thirds":"三等分構圖",
+"centered composition":"主體置中",
+"symmetry":"對稱平衡",
+"diagonal composition":"對角動勢",
+"leading lines":"引導視線",
+"frame within a frame":"框架聚焦",
+"negative space":"留白突出",
+"rule of odds":"奇數更自然",
+
+"eye level shot":"自然視角",
+"low angle shot":"強勢壓迫",
+"high angle shot":"弱勢俯視",
+"bird's eye view":"俯瞰全局",
+"worm's eye view":"仰視誇張",
+"dutch angle":"不穩張力",
+"over the shoulder shot":"帶入視角",
+
+"side lighting":"立體陰影",
+"top lighting":"壓頂光感",
+"backlighting":"逆光輪廓",
+"window light":"自然柔光",
+"neon lighting":"科技氛圍",
+"soft lighting":"柔和膚質",
+"hard lighting":"強烈對比",
+"rim lighting":"輪廓分離",
+"diffused light":"均勻柔光",
+"dramatic lighting":"戲劇張力",
+"cinematic lighting":"電影氛圍",
+"studio lighting":"棚拍均衡",
+
+"14mm":"誇張透視",
+"24mm":"環境廣角",
+"35mm":"自然視角",
+"50mm":"接近人眼",
+"85mm":"人像壓縮",
+"135mm":"強壓縮",
+"200mm":"極壓縮",
+
+"shallow depth of field":"背景模糊",
+"deep depth of field":"全景清晰",
+"bokeh":"散景效果",
+"sharp focus":"極清細節"
+};
+
+document.querySelectorAll('.item').forEach(btn=>{
+  let en=btn.dataset.en;
+
+  // 不顯示tooltip的分類
+  const noTooltip=[
+    'smiling','laughing','gentle smile','crying','frowning','despairing','angry','shouting','smirk',
+    '16:9','9:16','1:1','4:3','21:9',
+    'sunrise','noon','sunset','night','blue hour','rain','snow','fog','storm',
+    'extreme wide shot','wide shot','medium shot','medium close-up','full shot','close-up','extreme close-up',
+    'photorealistic','cinematic','high detail','oil painting','watercolor','ink wash painting','sketch',
+    'anime style','manga style','game art','studio ghibli style','pixar style','disney style',
+    'cyberpunk','steampunk','fantasy style','sci-fi'
+  ];
+
+  if(noTooltip.includes(en)) return;
+
+  let tip=document.createElement('div');
+  tip.className='tooltip';
+  tip.innerText=tooltipMap[en]||en;
+  btn.appendChild(tip);
+});
+
+document.querySelectorAll('.item').forEach(btn=>{
+  btn.onclick=()=>{
+    let en=btn.dataset.en;
+    if(selected.has(en)){selected.delete(en);btn.classList.remove('active')}else{selected.set(en,en);btn.classList.add('active')}
+    outputEN.value=[...selected.keys()].join(', ');
+  }
+});
+
+function copyText(){outputEN.select();document.execCommand('copy');alert('已複製')}
+</script>
+
+</body>
+</html>
